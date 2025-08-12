@@ -23,7 +23,7 @@ myApp.dashboard = (function($) {
     $_lastUpdate = $('#last-update');
 
     $_servertitle.append("<th style=\"width:21%\"></th>");
-    $_servertitle.append("<th style=\"width:9%\">近30日</th>");
+    $_servertitle.append("<th style=\"width:9%\">30 Days</th>");
     for (var d = 6; d >= 0; d--) {
       tmpdate = new Date(+ new Date() - 86400000 * d);
       datestr = (tmpdate.getMonth() + 1) + "-" + tmpdate.getDate();
@@ -85,30 +85,30 @@ myApp.dashboard = (function($) {
     data.alert = "";
     switch (parseInt(data.status, 10)) {
       case 0:
-        data.statustext = "未知";
+        data.statustext = "Unknown";
         data.statusicon = "question-sign";
         data.label = "default";
         break;
       case 1:
-        data.statustext = "未知";
+        data.statustext = "Unknown";
         data.statusicon = "question-sign";
         data.label = "default";
         break;
       case 2:
-        data.statustext = "正常";
+        data.statustext = "Normal";
         data.statusicon = "ok";
         data.label = "success";
         data.alert = "";
         break;
       case 8:
-        data.statustext = "异常";
+        data.statustext = "Error";
         data.statusicon = "exclamation-sign";
         data.label = "warning";
         data.alert = "warning";
         _hasError = true;
         break;
       case 9:
-        data.statustext = "故障";
+        data.statustext = "error";
         data.statusicon = "remove";
         data.label = "danger";
         data.alert = "danger";
@@ -209,12 +209,12 @@ myApp.dashboard = (function($) {
     while (stat = bar.pop()) {
       stattip = "" + Type2Word(parseInt(stat.typeid), true);
       if (stat.len == 1) {
-        stattip += " (近24小时)"
+        stattip += " (24 Hrs)"
       } else {
         if (stat.right - stat.left < 1000 * 3540) {
-          stattip += " (" + new Number((stat.right - stat.left) / (1000 * 60)).toFixed(0) + " 分钟)";
+          stattip += " (" + new Number((stat.right - stat.left) / (1000 * 60)).toFixed(0) + " min)";
         } else {
-          stattip += " (" + new Number((stat.right - stat.left) / (1000 * 3600)).toFixed(1) + " 小时)";
+          stattip += " (" + new Number((stat.right - stat.left) / (1000 * 3600)).toFixed(1) + " Hrs)";
         }
         stattip += "<br /><span class=\"ttime\">" + num2string(stat.left) + " ~ " + num2string(stat.right) + "</span>";
       }
@@ -238,13 +238,13 @@ myApp.dashboard = (function($) {
       }
       hours = minutes / 60;
       if (uptimes[a] == 100) {
-        uptimetext[a] = "可用率 100%";
+        uptimetext[a] = "Avaliable 100%";
       } else if (uptimes[a] >= 99.99) {
-        uptimetext[a] = "可用率 ≈100%";
+        uptimetext[a] = "Avaliable ≈100%";
       } else if (minutes < 60) {
-        uptimetext[a] = "可用率 " + new Number(uptimes[a]).toFixed(2) + "%<br />故障 " + new Number(minutes).toFixed(0) + " 分钟";
+        uptimetext[a] = "Avaliable " + new Number(uptimes[a]).toFixed(2) + "%<br />Error " + new Number(minutes).toFixed(0) + " min";
       } else {
-        uptimetext[a] = "可用率 " + new Number(uptimes[a]).toFixed(2) + "%<br />故障 " + new Number(hours).toFixed(1) + " 小时";
+        uptimetext[a] = "Avaliable " + new Number(uptimes[a]).toFixed(2) + "%<br />Error " + new Number(hours).toFixed(1) + " Hrs";
       }
     }
     //uptimes.push(data.alltimeuptimeratio);
@@ -332,15 +332,15 @@ myApp.dashboard = (function($) {
   function Type2Word(t, icon) {
     switch (t) {
     case 1:
-      return (icon ? "<span class=\"glyphicon glyphicon-remove-sign\"></span> " : "") + "故障";
+      return (icon ? "<span class=\"glyphicon glyphicon-remove-sign\"></span> " : "") + "Error";
     case 2:
-      return (icon ? "<span class=\"glyphicon glyphicon-ok-sign\"></span> " : "") + "正常";
+      return (icon ? "<span class=\"glyphicon glyphicon-ok-sign\"></span> " : "") + "Normal";
       //case 99:
-      //  return "未知";
+      //  return "Unknown";
       //case 98:
-      //  return "未知";
+      //  return "Unknown";
     default:
-      return (icon ? "<span class=\"glyphicon glyphicon-question-sign\"></span> " : "") + "未知";
+      return (icon ? "<span class=\"glyphicon glyphicon-question-sign\"></span> " : "") + "Unknown";
     }
   }
   function num2string(num) {
